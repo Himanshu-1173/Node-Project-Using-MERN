@@ -6,12 +6,12 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    const auth=localStorage.getItem('user');
-    if(auth){
-        navigate('/')
+  useEffect(() => {
+    const auth = localStorage.getItem("user");
+    if (auth) {
+      navigate("/Login");
     }
-})
+  });
 
   const collectData = async () => {
     console.warn(name, email, password);
@@ -24,41 +24,25 @@ const SignUp = () => {
     });
     result = await result.json();
     console.warn(result);
-    localStorage.setItem("user",JSON.stringify(result));
-    navigate("/");
-   
-  }
+    localStorage.setItem("user", JSON.stringify(result.result));
+    localStorage.setItem("token", JSON.stringify(result.auth));
+    navigate("/Login");
+  };
 
   return (
     <div className="signUp">
       <h1>Register</h1>
-      <input
-        className="inputBox"
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Enter name"
-      />
+      <input className="inputBox" type="text" value={name}
+        onChange={(e) => setName(e.target.value)} placeholder="Enter your name"/>
+
+      <input className="inputBox" type="email" value={email}
+        onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email address"/>
 
       <input
-        className="inputBox"
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Enter Email"
-      />
+        className="inputBox" type="password" value={password}
+        onChange={(e) => setPassword(e.target.value)} placeholder="Enter your Password"/>
 
-      <input
-        className="inputBox"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Enter Password"
-      />
-
-      <button type="button" className="signUpButton" onClick={collectData}>
-        Sign up
-      </button>
+      <button type="button" className="signUpButton" onClick={collectData}>Sign up</button>
     </div>
   );
 };
